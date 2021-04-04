@@ -26,7 +26,7 @@ public class Main {
             }
         }
 
-        String winner; // = rounds == 5 ? player1.getName() : player2.getName();
+        String winner;
 
         if (rounds == 5) { // X wins
             winner = game.getPlayer1().isX() ? game.getPlayer1().getName() : game.getPlayer2().getName();
