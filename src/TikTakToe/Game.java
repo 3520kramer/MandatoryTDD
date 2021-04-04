@@ -89,33 +89,28 @@ public class Game {
     public boolean hasWon(int round) {
         int sumX = 0;
         int sumY = 0;
-        List<Piece> piecesX = new ArrayList<>();
-        List<Piece> piecesO = new ArrayList<>();
+        List<Piece> pieces = new ArrayList<>();
 
-        if (round == 5) {
-            for (Piece pieceOnBoard : board) {
+        for (Piece pieceOnBoard : board) {
+            if(round == 5){
                 sumX += pieceOnBoard.isX() ? pieceOnBoard.getX() : 0;
                 sumY += pieceOnBoard.isX() ? pieceOnBoard.getY() : 0;
 
                 if (pieceOnBoard.isX()) {
-                    piecesX.add(pieceOnBoard);
+                    pieces.add(pieceOnBoard);
                 }
-            }
-            return winningConditions(sumX, sumY, piecesX);
-
-        } else if (round == 6) {
-            for (Piece pieceOnBoard : board) {
+            } else if (round == 6){
                 sumX += !pieceOnBoard.isX() ? pieceOnBoard.getX() : 0;
                 sumY += !pieceOnBoard.isX() ? pieceOnBoard.getY() : 0;
 
                 if (!pieceOnBoard.isX()) {
-                    piecesO.add(pieceOnBoard);
+                    pieces.add(pieceOnBoard);
                 }
+            }else{
+                return false;
             }
-            return winningConditions(sumX, sumY, piecesO);
-        } else {
-            return false;
         }
+        return winningConditions(sumX, sumY, pieces);
     }
 
     public boolean checkCross(List<Piece> pieces){

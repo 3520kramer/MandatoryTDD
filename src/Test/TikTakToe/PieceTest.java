@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PieceTest {
 
     @Test
-    void checkCoordinatesEquality() {
+    void isCoordinatesEqual() {
         Piece piece1 = new Piece(false, 1,1);
         Piece piece2 = new Piece(false, 1,1);
 
@@ -16,6 +16,6 @@ class PieceTest {
         Piece piece3 = new Piece(false, 1,2);
 
         assertFalse(piece1.isCoordinatesEqual(piece3));
-
     }
+
 }
