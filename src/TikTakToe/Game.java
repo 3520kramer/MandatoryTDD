@@ -21,45 +21,6 @@ public class Game {
         this.random = new Random();
     }
 
-    public void runGame() throws InterruptedException {
-        // username
-        promptUsersForPlayerName();
-
-        // assign piece
-        assignPieces();
-
-        boolean isFinished = false;
-        int rounds = 0;
-        int played = 1;
-
-        // while loop
-        while (!isFinished) {
-            //Thread.sleep(500);
-
-            rounds++;
-            placePieceOnBoard();
-
-            isFinished = hasWon(rounds);
-
-            if (rounds == 6 && !isFinished) {
-                board.clear();
-                rounds = 0;
-                played++;
-                System.out.println("Resetting game");
-            }
-        }
-
-        String winner; // = rounds == 5 ? player1.getName() : player2.getName();
-
-        if (rounds == 5) { // X wins
-            winner = player1.isX() ? player1.getName() : player2.getName();
-        } else { // O wins
-            winner = !player1.isX() ? player1.getName() : player2.getName();
-        }
-
-        System.out.println("The winner is: " + winner + " in " + played + " rounds");
-    }
-
     public void promptUsersForPlayerName() {
         System.out.println("What is the name of player 1?");
         player1.setName(scanner.nextLine());
