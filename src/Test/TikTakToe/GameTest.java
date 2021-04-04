@@ -205,29 +205,17 @@ class GameTest {
     @Test
     void checkCross() {
         Game game = new Game();
-        List<Piece> pieces = new ArrayList<>();
 
         // testing our check on cross
         Piece piece1 = new Piece(true, 1,2);
         Piece piece2 = new Piece(true, 2,2);
         Piece piece3 = new Piece(true, 3,2);
 
-        Piece piece4 = new Piece(false, 3,3);
-        Piece piece5 = new Piece(false, 1,3);
-
         game.getBoard().add(piece1);
-        game.getBoard().add(piece4);
         game.getBoard().add(piece2);
-        game.getBoard().add(piece5);
         game.getBoard().add(piece3);
 
-        pieces.add(piece1);
-        pieces.add(piece4);
-        pieces.add(piece2);
-        pieces.add(piece5);
-        pieces.add(piece3);
-
-        assertTrue(game.winningConditions(6, 6, pieces));
+        assertTrue(game.winningConditions(6, 6, game.getBoard()));
     }
 
     @Test
