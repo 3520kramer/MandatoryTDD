@@ -1,18 +1,14 @@
 package TikTakToe;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
-    @Test // hard to test because of input from scanner
+    @Test
     void promptUsersForPlayerNames() {
         Game game = new Game();
-        //game.promptUsersForPlayerName();
+        // game.promptUsersForPlayerName();
         // https://stackoverflow.com/questions/46268486/sending-scanner-inputs-to-a-unit-test
     }
 
@@ -29,11 +25,7 @@ class GameTest {
 
         // Testing one piece placed
         game.placePieceOnBoard();
-
         assertTrue(game.getBoard().size() > 0);
-
-        assertTrue(game.getBoard().get(0).getX() >= 1 && game.getBoard().get(0).getX() <= 3);
-        assertTrue(game.getBoard().get(0).getY() >= 1 && game.getBoard().get(0).getY() <= 3);
 
         // Test to make sure we don't allow duplicates
         for(int i = 0; i < 10; i++){
@@ -137,149 +129,80 @@ class GameTest {
     @Test
     void winningConditions() {
         Game game = new Game();
-        List<Piece> pieces = new ArrayList<>();
 
         Piece piece1;
         Piece piece2;
         Piece piece3;
-        Piece piece4;
-        Piece piece5;
-        Piece piece6;
 
         // checking rest
         // else if (sumX == 6 && (sumY == 3 || sumY == 9))
-        piece1 = new Piece(true, 1,1);
-        piece2 = new Piece(true, 2,1);
-        piece3 = new Piece(true, 1,2);
-
-        piece4 = new Piece(false, 3,3);
-        piece5 = new Piece(false, 1,3);
-        piece6 = new Piece(false, 2,3);
+        piece1 = new Piece(false, 3,3);
+        piece2 = new Piece(false, 1,3);
+        piece3 = new Piece(false, 2,3);
 
         game.getBoard().add(piece1);
-        game.getBoard().add(piece4);
         game.getBoard().add(piece2);
-        game.getBoard().add(piece5);
         game.getBoard().add(piece3);
-        game.getBoard().add(piece6);
 
-        pieces.add(piece1);
-        pieces.add(piece4);
-        pieces.add(piece2);
-        pieces.add(piece5);
-        pieces.add(piece3);
-        pieces.add(piece6);
-
-        assertTrue(game.winningConditions(6, 9, pieces));
+        assertTrue(game.winningConditions(6, 9, game.getBoard()));
 
         game.getBoard().clear();
-        pieces.clear();
 
         // else if (sumY == 6 && (sumX == 3 || sumX == 9))
         piece1 = new Piece(true, 1,1);
         piece2 = new Piece(true, 1,2);
         piece3 = new Piece(true, 1,3);
 
-        piece4 = new Piece(false, 3,1);
-        piece5 = new Piece(false, 3,2);
-
         game.getBoard().add(piece1);
-        game.getBoard().add(piece4);
         game.getBoard().add(piece2);
-        game.getBoard().add(piece5);
         game.getBoard().add(piece3);
 
-        pieces.add(piece1);
-        pieces.add(piece4);
-        pieces.add(piece2);
-        pieces.add(piece5);
-        pieces.add(piece3);
-
-        assertTrue(game.winningConditions(3, 6, pieces));
-
-        game.getBoard().clear();
-        pieces.clear();
-
+        assertTrue(game.winningConditions(3, 6, game.getBoard()));
     }
 
     @Test
     void checkCross() {
         Game game = new Game();
-        List<Piece> pieces = new ArrayList<>();
 
         // testing our check on cross
         Piece piece1 = new Piece(true, 1,2);
         Piece piece2 = new Piece(true, 2,2);
         Piece piece3 = new Piece(true, 3,2);
 
-        Piece piece4 = new Piece(false, 3,3);
-        Piece piece5 = new Piece(false, 1,3);
 
         game.getBoard().add(piece1);
-        game.getBoard().add(piece4);
         game.getBoard().add(piece2);
-        game.getBoard().add(piece5);
         game.getBoard().add(piece3);
 
-        pieces.add(piece1);
-        pieces.add(piece4);
-        pieces.add(piece2);
-        pieces.add(piece5);
-        pieces.add(piece3);
-
-        assertTrue(game.winningConditions(6, 6, pieces));
+        assertTrue(game.winningConditions(6, 6, game.getBoard()));
     }
 
     @Test
     void checkDiagonals() {
         Game game = new Game();
-        List<Piece> pieces = new ArrayList<>();
 
         // checking diagonals - bottom up
         Piece piece1 = new Piece(true, 1,1);
         Piece piece2 = new Piece(true, 2,2);
         Piece piece3 = new Piece(true, 3,3);
 
-        Piece piece4 = new Piece(false, 3,2);
-        Piece piece5 = new Piece(false, 1,3);
-
         game.getBoard().add(piece1);
-        game.getBoard().add(piece4);
         game.getBoard().add(piece2);
-        game.getBoard().add(piece5);
         game.getBoard().add(piece3);
 
-        pieces.add(piece1);
-        pieces.add(piece4);
-        pieces.add(piece2);
-        pieces.add(piece5);
-        pieces.add(piece3);
-
-        assertTrue(game.winningConditions(6, 6, pieces));
+        assertTrue(game.winningConditions(6, 6, game.getBoard()));
 
         game.getBoard().clear();
-        pieces.clear();
 
         // checking diagonals - up to bottom
         piece1 = new Piece(true, 1,3);
         piece2 = new Piece(true, 2,2);
         piece3 = new Piece(true, 3,1);
 
-        piece4 = new Piece(false, 3,2);
-        piece5 = new Piece(false, 2,3);
-
         game.getBoard().add(piece1);
-        game.getBoard().add(piece4);
         game.getBoard().add(piece2);
-        game.getBoard().add(piece5);
         game.getBoard().add(piece3);
 
-        pieces.add(piece1);
-        pieces.add(piece4);
-        pieces.add(piece2);
-        pieces.add(piece5);
-        pieces.add(piece3);
-
-        assertTrue(game.winningConditions(6, 6, pieces));
+        assertTrue(game.winningConditions(6, 6, game.getBoard()));
     }
 }
