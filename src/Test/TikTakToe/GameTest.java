@@ -1,100 +1,102 @@
 package TikTakToe;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
-    @Test
-    void promptUsersForPlayerNames() {
-        Game game = new Game();
-        // game.promptUsersForPlayerName();
-        // https://stackoverflow.com/questions/46268486/sending-scanner-inputs-to-a-unit-test
+    Game game;
+
+    @BeforeEach
+    void beforeEach() {
+
+        // arrange
+        game = new Game();
     }
 
     @Test
-    void assignPieces() throws InterruptedException {
-        Game game = new Game();
+    void assignPieces_playersGetPieces_playersPiecesAreNotEqual() throws InterruptedException {
+
+        // act
         game.assignPieces();
+
+        // assert
         assertNotEquals(game.getPlayer1().isX(), game.getPlayer2().isX());
     }
 
+
     @Test
-    void placePieceOnBoard() throws InterruptedException {
-        Game game = new Game();
+    void placePieceOnBoard_newGameFirstMove_moreThanOnePiecesOnBoard() {
 
-        // Testing one piece placed
+        // act
         game.placePieceOnBoard();
-        assertTrue(game.getBoard().size() > 0);
 
-        // Test to make sure we don't allow duplicates
-        for(int i = 0; i < 10; i++){
+        // assert
+        assertTrue(game.getBoard().size() > 0);
+    }
+
+
+    @Test
+    void placePieceOnBoard_playingGame_noDuplicates() {
+
+        // Run game 10 times to test for duplicates
+        for (int i = 0; i < 10; i++) {
+
+            // arrange
             game.getBoard().clear();
 
-            for(int j = 0; j < 6; j++){
+            for (int j = 0; j < 6; j++) {
+                // act
                 game.placePieceOnBoard();
                 var newPiece = game.getBoard().get(j);
 
-                for(int k = 0; k <= j-1; k++){
+                for (int k = 0; k <= j - 1; k++) {
                     var alreadyPlacedPiece = game.getBoard().get(k);
+                    // assert
                     assertFalse(newPiece.isCoordinatesEqual(alreadyPlacedPiece));
                 }
             }
         }
     }
 
+
     @Test
-    void getRandomCoordinate() {
-        Game game = new Game();
-        int coordinate;
+    void hasWon_xHasWon_gameStopsAtRoundFive() {
 
-        HashMap<Integer, Integer> dictionary = new HashMap<>();
-        dictionary.put(1, 0);
-        dictionary.put(2, 0);
-        dictionary.put(3, 0);
+        // arrange
+        Piece piece1 = new Piece(true, 1, 1);
+        Piece piece2 = new Piece(true, 1, 2);
+        Piece piece3 = new Piece(true, 1, 3);
+        Piece piece4 = new Piece(false, 3, 1);
+        Piece piece5 = new Piece(false, 3, 2);
 
-        for(int i = 0; i <= 100; i++){
-            coordinate = game.getRandomCoordinate();
-            dictionary.put(coordinate, dictionary.get(coordinate) + 1);
-            assertTrue(coordinate >= 1 && coordinate <= 3);
-        }
+        game.getBoard().add(piece1);
+        game.getBoard().add(piece4);
+        game.getBoard().add(piece2);
+        game.getBoard().add(piece5);
+        game.getBoard().add(piece3);
 
-        for(Map.Entry<Integer, Integer> entry: dictionary.entrySet()) {
-            assertTrue(entry.getValue() > 10);
-        }
-        System.out.println(dictionary);
+        // act
+        boolean hasWon = game.hasWon(5);
+
+        // assert
+        assertTrue(hasWon);
+
     }
 
     @Test
-    void hasWon() {
-        Game game = new Game();
+    void hasWon_oHasWon_gameStopsAtRoundSix() {
 
-        // Piece X wins at round 5
-        Piece piece1 = new Piece(true, 1,1);
-        Piece piece2 = new Piece(true, 1,2);
-        Piece piece3 = new Piece(true, 1,3);
-
-        Piece piece4 = new Piece(false, 3,1);
-        Piece piece5 = new Piece(false, 3,2);
-
-        game.getBoard().add(piece1);
-        game.getBoard().add(piece4);
-        game.getBoard().add(piece2);
-        game.getBoard().add(piece5);
-        game.getBoard().add(piece3);
-
-        assertTrue(game.hasWon(5));
-
-        game.getBoard().clear();
-
-        // Piece O wins at round 6
-        piece1 = new Piece(false, 1,1);
-        piece2 = new Piece(false, 1,2);
-        piece3 = new Piece(false, 1,3);
-
-        piece4 = new Piece(true, 3,1);
-        piece5 = new Piece(true, 3,2);
-        Piece piece6 = new Piece(true, 2,2);
+        // arrange
+        Piece piece1 = new Piece(false, 1, 1);
+        Piece piece2 = new Piece(false, 1, 2);
+        Piece piece3 = new Piece(false, 1, 3);
+        Piece piece4 = new Piece(true, 3, 1);
+        Piece piece5 = new Piece(true, 3, 2);
+        Piece piece6 = new Piece(true, 2, 2);
 
         game.getBoard().add(piece4);
         game.getBoard().add(piece1);
@@ -103,18 +105,20 @@ class GameTest {
         game.getBoard().add(piece6);
         game.getBoard().add(piece3);
 
+        // act and assert
         assertTrue(game.hasWon(6));
+    }
 
-        game.getBoard().clear();
+    @Test
+    void hasWon_draw_nobodyWinsAtRoundSix() {
 
-        // Draw
-        piece1 = new Piece(true, 1,1);
-        piece2 = new Piece(true, 3,1);
-        piece3 = new Piece(true, 3,2);
-
-        piece4 = new Piece(false, 2,1);
-        piece5 = new Piece(false, 2,2);
-        piece6 = new Piece(false, 1,2);
+        // arrange
+        Piece piece1 = new Piece(true, 1, 1);
+        Piece piece2 = new Piece(true, 3, 1);
+        Piece piece3 = new Piece(true, 3, 2);
+        Piece piece4 = new Piece(false, 2, 1);
+        Piece piece5 = new Piece(false, 2, 2);
+        Piece piece6 = new Piece(false, 1, 2);
 
         game.getBoard().add(piece1);
         game.getBoard().add(piece4);
@@ -123,86 +127,154 @@ class GameTest {
         game.getBoard().add(piece3);
         game.getBoard().add(piece6);
 
+        // act and assert
         assertFalse(game.hasWon(6));
     }
 
     @Test
-    void winningConditions() {
-        Game game = new Game();
+    void winningConditions_winWithHorizontalOuterLine_true() {
 
-        Piece piece1;
-        Piece piece2;
-        Piece piece3;
-
-        // checking rest
-        // else if (sumX == 6 && (sumY == 3 || sumY == 9))
-        piece1 = new Piece(false, 3,3);
-        piece2 = new Piece(false, 1,3);
-        piece3 = new Piece(false, 2,3);
+        // arrange
+        Piece piece1 = new Piece(false, 3, 3);
+        Piece piece2 = new Piece(false, 1, 3);
+        Piece piece3 = new Piece(false, 2, 3);
 
         game.getBoard().add(piece1);
         game.getBoard().add(piece2);
         game.getBoard().add(piece3);
 
+        // act and assert
         assertTrue(game.winningConditions(6, 9, game.getBoard()));
+    }
 
-        game.getBoard().clear();
+    @Test
+    void winningConditions_winWithVerticalOuterLine_true() {
 
-        // else if (sumY == 6 && (sumX == 3 || sumX == 9))
-        piece1 = new Piece(true, 1,1);
-        piece2 = new Piece(true, 1,2);
-        piece3 = new Piece(true, 1,3);
+        // arrange
+        Piece piece1 = new Piece(true, 1, 1);
+        Piece piece2 = new Piece(true, 1, 2);
+        Piece piece3 = new Piece(true, 1, 3);
 
         game.getBoard().add(piece1);
         game.getBoard().add(piece2);
         game.getBoard().add(piece3);
 
+        // act and assert
         assertTrue(game.winningConditions(3, 6, game.getBoard()));
     }
 
     @Test
-    void checkCross() {
-        Game game = new Game();
+    void winningConditions_noWinningCombo_gameNotWon() {
 
-        // testing our check on cross
-        Piece piece1 = new Piece(true, 1,2);
-        Piece piece2 = new Piece(true, 2,2);
-        Piece piece3 = new Piece(true, 3,2);
-
+        // arrange
+        Piece piece1 = new Piece(true, 1, 1);
+        Piece piece2 = new Piece(true, 1, 2);
+        Piece piece3 = new Piece(true, 2, 3);
 
         game.getBoard().add(piece1);
         game.getBoard().add(piece2);
         game.getBoard().add(piece3);
 
+        // act and assert
+        assertFalse(game.winningConditions(4, 6, game.getBoard()));
+    }
+
+    @Test
+    void checkCross_winWithVerticalCross_true() {
+
+        // arrange
+        Piece piece1 = new Piece(true, 1, 2);
+        Piece piece2 = new Piece(true, 2, 2);
+        Piece piece3 = new Piece(true, 3, 2);
+
+        game.getBoard().add(piece1);
+        game.getBoard().add(piece2);
+        game.getBoard().add(piece3);
+
+        // act and assert
         assertTrue(game.winningConditions(6, 6, game.getBoard()));
     }
 
     @Test
-    void checkDiagonals() {
-        Game game = new Game();
+    void checkCross_winWithHorizontalCross_true() {
 
-        // checking diagonals - bottom up
-        Piece piece1 = new Piece(true, 1,1);
-        Piece piece2 = new Piece(true, 2,2);
-        Piece piece3 = new Piece(true, 3,3);
-
-        game.getBoard().add(piece1);
-        game.getBoard().add(piece2);
-        game.getBoard().add(piece3);
-
-        assertTrue(game.winningConditions(6, 6, game.getBoard()));
-
-        game.getBoard().clear();
-
-        // checking diagonals - up to bottom
-        piece1 = new Piece(true, 1,3);
-        piece2 = new Piece(true, 2,2);
-        piece3 = new Piece(true, 3,1);
+        // arrange
+        Piece piece1 = new Piece(true, 2, 1);
+        Piece piece2 = new Piece(true, 2, 2);
+        Piece piece3 = new Piece(true, 2, 3);
 
         game.getBoard().add(piece1);
         game.getBoard().add(piece2);
         game.getBoard().add(piece3);
 
+        // act and assert
         assertTrue(game.winningConditions(6, 6, game.getBoard()));
     }
+
+    @Test
+    void checkCross_noMatchingCombo_gameNotWon() {
+
+        // arrange
+        Piece piece1 = new Piece(true, 1, 1);
+        Piece piece2 = new Piece(true, 2, 2);
+        Piece piece3 = new Piece(true, 2, 3);
+
+        game.getBoard().add(piece1);
+        game.getBoard().add(piece2);
+        game.getBoard().add(piece3);
+
+        // act and assert
+        assertFalse(game.checkCross(game.getBoard()));
+    }
+
+    @Test
+    void checkDiagonals_checkDiagonalsBottomUp_true() {
+
+        // arrange
+        Piece piece1 = new Piece(true, 1, 1);
+        Piece piece2 = new Piece(true, 2, 2);
+        Piece piece3 = new Piece(true, 3, 3);
+
+        game.getBoard().add(piece1);
+        game.getBoard().add(piece2);
+        game.getBoard().add(piece3);
+
+        // act and assert
+        assertTrue(game.winningConditions(6, 6, game.getBoard()));
+
+    }
+
+    @Test
+    void checkDiagonals_checkDiagonalsUpToBottom_true() {
+
+        // arrange
+        Piece piece1 = new Piece(true, 1, 3);
+        Piece piece2 = new Piece(true, 2, 2);
+        Piece piece3 = new Piece(true, 3, 1);
+
+        game.getBoard().add(piece1);
+        game.getBoard().add(piece2);
+        game.getBoard().add(piece3);
+
+        // act and assert
+        assertTrue(game.winningConditions(6, 6, game.getBoard()));
+    }
+
+    @Test
+    void checkDiagonals_noMatchingCombo_gameNotWon() {
+
+        // arrange
+        Piece piece1 = new Piece(true, 2, 3);
+        Piece piece2 = new Piece(true, 2, 2);
+        Piece piece3 = new Piece(true, 3, 1);
+
+        game.getBoard().add(piece1);
+        game.getBoard().add(piece2);
+        game.getBoard().add(piece3);
+
+        // act and assert
+        assertFalse(game.checkDiagonals(game.getBoard()));
+    }
+
+
 }

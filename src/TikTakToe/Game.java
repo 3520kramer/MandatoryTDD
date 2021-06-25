@@ -53,28 +53,28 @@ public class Game {
         List<Piece> pieces = new ArrayList<>();
 
         for (Piece pieceOnBoard : board) {
-            if(round == 5){
+            if (round == 5) {
                 sumX += pieceOnBoard.isX() ? pieceOnBoard.getX() : 0;
                 sumY += pieceOnBoard.isX() ? pieceOnBoard.getY() : 0;
 
                 if (pieceOnBoard.isX()) {
                     pieces.add(pieceOnBoard);
                 }
-            } else if (round == 6){
+            } else if (round == 6) {
                 sumX += !pieceOnBoard.isX() ? pieceOnBoard.getX() : 0;
                 sumY += !pieceOnBoard.isX() ? pieceOnBoard.getY() : 0;
 
                 if (!pieceOnBoard.isX()) {
                     pieces.add(pieceOnBoard);
                 }
-            }else{
+            } else {
                 return false;
             }
         }
         return winningConditions(sumX, sumY, pieces);
     }
 
-    public boolean checkCross(List<Piece> pieces){
+    public boolean checkCross(List<Piece> pieces) {
         int countX = 0;
         int countY = 0;
 
@@ -89,13 +89,13 @@ public class Game {
             }
         }
 
-        if(countX == 3 || countY == 3 ){
+        if (countX == 3 || countY == 3) {
             System.out.println("Cross");
             return true;
         } else return false;
     }
 
-    public boolean checkDiagonals(List<Piece> pieces){
+    public boolean checkDiagonals(List<Piece> pieces) {
         int pairs = 0;
         int matches = 0;
 
@@ -109,7 +109,7 @@ public class Game {
             }
         }
 
-        if(pairs == 3){
+        if (pairs == 3) {
             System.out.println("Diagonals - Bottom up");
             return true;
         }
@@ -123,7 +123,7 @@ public class Game {
             }
         }
 
-        if(matches == 3){
+        if (matches == 3) {
             System.out.println("Diagonals - Up to bottom");
             return true;
         }
@@ -134,19 +134,20 @@ public class Game {
     public boolean winningConditions(int sumX, int sumY, List<Piece> pieces) {
 
         if (sumX == 6 && sumY == 6) {
-            if(checkCross(pieces)){
+            if (checkCross(pieces)) {
                 return true;
 
-            } else if(checkDiagonals(pieces)){
+            } else if (checkDiagonals(pieces)) {
                 return true;
 
             } else return false;
 
-        // checking rest
+            // checking for horizontal outer line win
         } else if (sumX == 6 && (sumY == 3 || sumY == 9)) {
             System.out.println("Outerline");
             return true;
 
+            // checking for vertical outer line win
         } else if (sumY == 6 && (sumX == 3 || sumX == 9)) {
             System.out.println("Outerline");
             return true;
