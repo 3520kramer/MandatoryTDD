@@ -16,7 +16,7 @@ class GameTest {
     void assignPieces() throws InterruptedException {
         Game game = new Game();
         game.assignPieces();
-        assertNotEquals(game.getPlayer1().isX(), game.getPlayer2().isX());
+        assertNotEquals(game.getPlayer1().isPlayerX(), game.getPlayer2().isPlayerX());
     }
 
     @Test

@@ -29,9 +29,9 @@ public class Main {
         String winner;
 
         if (rounds == 5) { // X wins
-            winner = game.getPlayer1().isX() ? game.getPlayer1().getName() : game.getPlayer2().getName();
+            winner = game.getPlayer1().isPlayerX() ? game.getPlayer1().getName() : game.getPlayer2().getName();
         } else { // O wins
-            winner = !game.getPlayer1().isX() ? game.getPlayer1().getName() : game.getPlayer2().getName();
+            winner = !game.getPlayer1().isPlayerX() ? game.getPlayer1().getName() : game.getPlayer2().getName();
         }
 
         System.out.println("The winner is: " + winner + " in " + played + " rounds");

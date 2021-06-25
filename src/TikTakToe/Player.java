@@ -3,23 +3,23 @@ package TikTakToe;
 public class Player {
 
     private String name;
-    private boolean isX;
+    private boolean isPlayerX;
 
     public Player() {
 
     }
 
-    public Player(String name, boolean isX) {
+    public Player(String name, boolean isPlayerX) {
         this.name = name;
-        this.isX = isX;
+        this.isPlayerX = isPlayerX;
     }
 
-    public boolean isX() {
-        return isX;
+    public boolean isPlayerX() {
+        return isPlayerX;
     }
 
-    public void setX(boolean x) {
-        isX = x;
+    public void setPlayerX(boolean playerX) {
+        isPlayerX = playerX;
     }
 
     public String getName() {

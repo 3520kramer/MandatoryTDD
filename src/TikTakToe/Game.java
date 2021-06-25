@@ -38,10 +38,10 @@ public class Game {
         Thread.sleep(500);
         System.out.println("...");
 
-        player1.setX(random.nextBoolean());
-        player2.setX(!(player1.isX()));
+        player1.setPlayerX(random.nextBoolean());
+        player2.setPlayerX(!(player1.isPlayerX()));
 
-        Player startingPlayer = player1.isX() ? player1 : player2;
+        Player startingPlayer = player1.isPlayerX() ? player1 : player2;
 
         System.out.println(startingPlayer.getName() + " will start the game");
         Thread.sleep(1000);
