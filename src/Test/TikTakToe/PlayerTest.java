@@ -56,7 +56,7 @@ class PlayerTest {
         Player player = new Player("Hans", false);
 
         // act
-        player.setPlayerX(true);
+        player.setIsPlayerX(true);
 
         // assert
         assertTrue(player.isPlayerX());
@@ -68,7 +68,7 @@ class PlayerTest {
         Player player = new Player("Hans", false);
 
         // act
-        player.setPlayerX(false);
+        player.setIsPlayerX(false);
 
         // assert
         assertFalse(player.isPlayerX());

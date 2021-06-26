@@ -1,6 +1,5 @@
 package TikTakToe;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ class GameTest {
         game.assignPieces();
 
         // assert
-        assertNotEquals(game.getPlayer1().isX(), game.getPlayer2().isX());
+        assertNotEquals(game.getPlayer1().isPlayerX(), game.getPlayer2().isPlayerX());
     }
 
 
