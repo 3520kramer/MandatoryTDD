@@ -38,8 +38,8 @@ public class Game {
         Thread.sleep(500);
         System.out.println("...");
 
-        player1.setPlayerX(random.nextBoolean());
-        player2.setPlayerX(!(player1.isPlayerX()));
+        player1.setIsPlayerX(random.nextBoolean());
+        player2.setIsPlayerX(!(player1.isPlayerX()));
 
         Player startingPlayer = player1.isPlayerX() ? player1 : player2;
 

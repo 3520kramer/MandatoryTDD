@@ -18,8 +18,8 @@ public class Player {
         return isPlayerX;
     }
 
-    public void setPlayerX(boolean playerX) {
-        isPlayerX = playerX;
+    public void setIsPlayerX(boolean isPlayerX) {
+        this.isPlayerX = isPlayerX;
     }
 
     public String getName() {
