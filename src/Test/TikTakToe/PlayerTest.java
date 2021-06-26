@@ -33,7 +33,7 @@ class PlayerTest {
     }
 
     @Test
-    void isX_newPlayerIsX_true() {
+    void isPlayerX_newPlayerIsX_true() {
         // arrange
         Player player = new Player("Hans", true);
 
@@ -42,7 +42,7 @@ class PlayerTest {
     }
 
     @Test
-    void isX_newPlayerIsX_false() {
+    void isPlayerX_newPlayerIsX_false() {
         // arrange
         Player player = new Player("Hans", false);
 
