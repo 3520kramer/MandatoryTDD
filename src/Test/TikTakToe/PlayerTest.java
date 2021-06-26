@@ -51,7 +51,7 @@ class PlayerTest {
     }
 
     @Test
-    void setX_setXToTrue_true() {
+    void setIsPlayerX_setXToTrue_true() {
         // arrange
         Player player = new Player("Hans", false);
 
@@ -63,7 +63,7 @@ class PlayerTest {
     }
 
     @Test
-    void setX_setXToFalse_false() {
+    void setIsPlayerX_setXToFalse_false() {
         // arrange
         Player player = new Player("Hans", false);
 
